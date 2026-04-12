@@ -1,0 +1,26 @@
+{
+    "name": "honemo/all-in-one-download-c411",
+    "autoload": {
+        "psr-4": {
+            "AllI1D\\C411\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "honemo",
+            "email": "honemo@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "honemo/wp-github-updater": "^1.0"
+    },
+    "require-dev": {
+        "roots/wordpress": "@stable"
+    },
+    "config": {
+        "allow-plugins": {
+            "roots/wordpress-core-installer": true
+        }
+    }
+}
