@@ -3,8 +3,8 @@ Contributors: tcacamou
 Tags: download, torrent, c411, all-in-one-download
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 0.0.3
-Requires PHP: 7.4
+Stable tag: 0.0.4
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,21 @@ After activation, navigate to **All-in-one Download > C411** in the WordPress ad
 
 Enter your C411 API key in the provided field and save. The plugin will then automatically query the C411 API whenever All-in-one Download processes a movie or TV show request.
 
+== Using a Different PHP Version ==
+
+The `vendor/` directory included in the release ZIP has been compiled for **PHP 8.2**. If your server runs a different PHP version, Composer dependencies must be regenerated to match your environment.
+
+**Steps to recompile Composer dependencies:**
+
+1. Make sure [Composer](https://getcomposer.org/) is installed on your machine and that your local PHP version matches your server's version.
+2. Clone or download the plugin source code from the [GitHub repository](https://github.com/Honemo/All-in-one-Download-c411).
+3. Delete the existing `vendor/` directory:
+   `rm -rf vendor/`
+4. Regenerate the dependencies and the autoloader:
+   `composer install --no-dev --optimize-autoloader`
+5. Repackage the plugin — create a ZIP of the entire plugin directory (including the newly generated `vendor/`).
+6. Install the repackaged ZIP via **WordPress Admin > Plugins > Add New > Upload Plugin**.
+
 == Frequently Asked Questions ==
 
 = Where do I get a C411 API key? =
@@ -57,6 +72,9 @@ Torrent files are saved in the `wp-content/uploads/c411/` directory on your serv
 No. This plugin is an add-on and requires the All-in-one Download plugin to be installed and active.
 
 == Changelog ==
+= 0.0.4 =
+*Fix Composer issues again
+
 = 0.0.3 =
 * Fix Composer issues
 
