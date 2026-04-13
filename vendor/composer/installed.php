@@ -3,7 +3,7 @@
         'name' => 'honemo/all-in-one-download-c411',
         'pretty_version' => 'dev-trunk',
         'version' => 'dev-trunk',
-        'reference' => '0b8e3f4ef8f03f7cdbcbebe29c9616c7fa79814e',
+        'reference' => '2ce3a5018cd84c0d8e6fdc4dcdcdf78ab274d404',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'honemo/all-in-one-download-c411' => array(
             'pretty_version' => 'dev-trunk',
             'version' => 'dev-trunk',
-            'reference' => '0b8e3f4ef8f03f7cdbcbebe29c9616c7fa79814e',
+            'reference' => '2ce3a5018cd84c0d8e6fdc4dcdcdf78ab274d404',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
