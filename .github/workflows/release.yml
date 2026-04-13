@@ -21,8 +21,8 @@ jobs:
           php-version: '7.4'
           tools: composer
           
-      # - name: Install Composer dependencies
-      #   run: composer install --no-dev --optimize-autoloader --no-interaction
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction
         
       - name: Get version from tag
         id: get_version
