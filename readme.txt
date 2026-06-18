@@ -3,7 +3,7 @@ Contributors: tcacamou
 Tags: download, torrent, c411, all-in-one-download
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 0.0.4
+Stable tag: 0.0.5
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -72,8 +72,11 @@ Torrent files are saved in the `wp-content/uploads/c411/` directory on your serv
 No. This plugin is an add-on and requires the All-in-one Download plugin to be installed and active.
 
 == Changelog ==
+= 0.0.5 =
+* Feat Add the status feature
+
 = 0.0.4 =
-*Fix Composer issues again
+* Fix Composer issues again
 
 = 0.0.3 =
 * Fix Composer issues

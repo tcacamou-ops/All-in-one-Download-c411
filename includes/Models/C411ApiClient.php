@@ -26,6 +26,26 @@ class C411ApiClient
     }
 
     /**
+     * Test the connection to the C411 API
+     * @return bool
+     */
+    public function testConnection()
+    {
+        try {
+            $path = $this->baseUrl.'/torrents?' . $this->buildQueryString(['q' => 'test']);
+            error_log('Testing C411 API connection with path: ' . $path);
+            $headers = [
+                'Authorization' => 'Bearer ' . $this->apiKey
+            ];
+            $response = $this->client->request('GET', $path, ['headers' => $headers]);
+            return $response->getStatusCode() === 200;
+        } catch (RequestException $e) {
+            error_log('C411 API connection test failed: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
      * List torrents
      */
     public function listTorrents($params = [])

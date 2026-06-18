@@ -3,7 +3,7 @@
  * Plugin Name: All-in-one Download C411
  * Plugin URI: https://github.com/tcacamou-ops/All-in-one-Download-c411
  * Description: Add-on for All-in-one Download that allows downloading torrents from C411.
- * Version: 0.0.4
+ * Version: 0.0.5
  * Author: tcacamou
  * Author URI: https://github.com/tcacamou-ops
  * Text Domain: all-in-one-download-c411
@@ -14,6 +14,7 @@ namespace AllI1D\C411;
 
 use AllI1D\C411\Filters\C411Movies;
 use AllI1D\C411\Filters\C411TvShows;
+use AllI1D\C411\Filters\Status;
 use honemo\updater\Updater;
 
 // Security: prevent direct file access.
@@ -62,6 +63,7 @@ class Plugin {
 		$C411ApiTvShows = new C411TvShows();
         add_filter( 'alli1d_process_tvshow', [$C411ApiTvShows,'process_tv_show']);
         add_filter( 'alli1d_process_movie', [$C411ApiMovies,'process_movie']);
+        add_filter( 'alli1d_process_status', [Status::class,'process_status']);
     }
 }
 

@@ -12,6 +12,7 @@ return array(
     'AllI1D\\C411\\Components\\Credentials' => $baseDir . '/includes/Components/Credentials.php',
     'AllI1D\\C411\\Filters\\C411Movies' => $baseDir . '/includes/Filters/C411Movies.php',
     'AllI1D\\C411\\Filters\\C411TvShows' => $baseDir . '/includes/Filters/C411TvShows.php',
+    'AllI1D\\C411\\Filters\\Status' => $baseDir . '/includes/Filters/Status.php',
     'AllI1D\\C411\\Models\\C411ApiClient' => $baseDir . '/includes/Models/C411ApiClient.php',
     'AllI1D\\C411\\Pages\\Settings' => $baseDir . '/includes/Pages/Settings.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',

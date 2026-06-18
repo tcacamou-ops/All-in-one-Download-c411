@@ -73,6 +73,7 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'AllI1D\\C411\\Components\\Credentials' => __DIR__ . '/../..' . '/includes/Components/Credentials.php',
         'AllI1D\\C411\\Filters\\C411Movies' => __DIR__ . '/../..' . '/includes/Filters/C411Movies.php',
         'AllI1D\\C411\\Filters\\C411TvShows' => __DIR__ . '/../..' . '/includes/Filters/C411TvShows.php',
+        'AllI1D\\C411\\Filters\\Status' => __DIR__ . '/../..' . '/includes/Filters/Status.php',
         'AllI1D\\C411\\Models\\C411ApiClient' => __DIR__ . '/../..' . '/includes/Models/C411ApiClient.php',
         'AllI1D\\C411\\Pages\\Settings' => __DIR__ . '/../..' . '/includes/Pages/Settings.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
