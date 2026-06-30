@@ -1,6 +1,8 @@
 <?php
 namespace AllI1D\C411\Api;
 
+use AllI1D\Helpers\Crypto;
+
 class CredentialsApi {
 
     private $route_namespace;
@@ -31,19 +33,24 @@ class CredentialsApi {
             $this->route_namespace,
             $this->current_namespace,
             [
-                'methods' => 'POST',
-                'callback' => [$this, 'set_credentials'],
-                'permission_callback' => [$this, 'check_permissions'],
+                'methods'             => 'POST',
+                'callback'            => [ $this, 'set_credentials' ],
+                'permission_callback' => [ $this, 'check_permissions' ],
+                'args'                => [
+                    'c411_api_key' => [
+                        'required'          => true,
+                        'type'              => 'string',
+                        'sanitize_callback' => 'sanitize_text_field',
+                        'validate_callback' => static fn( $v ) => is_string( $v ) && strlen( $v ) >= 8 && strlen( $v ) <= 512,
+                    ],
+                ],
             ]
         );
     }
 
     public function set_credentials($request) {
-		$c411_api_key = $request->get_param('c411_api_key');
-        if (empty($c411_api_key)) {
-            return new \WP_REST_Response(['status' => 'You need to specify an API key'], 400);
-        }
-        update_option('alli1d_c411_api_key', $c411_api_key);
+        $c411_api_key = $request->get_param('c411_api_key');
+        update_option('alli1d_c411_api_key', Crypto::encrypt( $c411_api_key ));
         return new \WP_REST_Response(['status' => 'success'], 200);
     }
 }

@@ -12,9 +12,11 @@
 
 namespace AllI1D\C411;
 
+use AllI1D\C411\Components\Credentials;
 use AllI1D\C411\Filters\C411Movies;
 use AllI1D\C411\Filters\C411TvShows;
 use AllI1D\C411\Filters\Status;
+use AllI1D\Helpers\Crypto;
 use honemo\updater\Updater;
 
 // Security: prevent direct file access.
@@ -59,11 +61,34 @@ class Plugin {
     }
 
     private function initialize_filters() {
-		$C411ApiMovies = new C411Movies();
-		$C411ApiTvShows = new C411TvShows();
-        add_filter( 'alli1d_process_tvshow', [$C411ApiTvShows,'process_tv_show']);
-        add_filter( 'alli1d_process_movie', [$C411ApiMovies,'process_movie']);
-        add_filter( 'alli1d_process_status', [Status::class,'process_status']);
+        $C411ApiMovies  = new C411Movies();
+        $C411ApiTvShows = new C411TvShows();
+        add_filter( 'alli1d_process_tvshow', [$C411ApiTvShows, 'process_tv_show'] );
+        add_filter( 'alli1d_process_movie', [$C411ApiMovies, 'process_movie'] );
+        add_filter( 'alli1d_process_status', [Status::class, 'process_status'] );
+        add_filter( 'alli1d_provider_settings_modals', [$this, 'register_modal'] );
+        add_action( 'admin_init', [$this, 'migrate_credentials_encryption'] );
+    }
+
+    public function migrate_credentials_encryption(): void {
+        $migrated_key = 'alli1d_c411_credentials_encrypted_v1';
+        if ( get_option( $migrated_key ) ) {
+            return;
+        }
+        $api_key = get_option( 'alli1d_c411_api_key', '' );
+        if ( '' !== $api_key && 0 !== strpos( $api_key, 'enc:' ) ) {
+            update_option( 'alli1d_c411_api_key', Crypto::encrypt( $api_key ) );
+        }
+        update_option( $migrated_key, true );
+    }
+
+    public function register_modal( array $modals ): array {
+        $credentials = new Credentials();
+        $modals['C411'] = [
+            'title' => __( 'C411 Settings', 'all-in-one-download-c411' ),
+            'html'  => $credentials->get_html(),
+        ];
+        return $modals;
     }
 }
 

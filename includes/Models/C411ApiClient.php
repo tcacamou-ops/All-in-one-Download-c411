@@ -33,7 +33,7 @@ class C411ApiClient
     {
         try {
             $path = $this->baseUrl.'/torrents?' . $this->buildQueryString(['q' => 'test']);
-            error_log('Testing C411 API connection with path: ' . $path);
+            error_log('Testing C411 API connection with path: ' . $this->redact_url( $path ) );
             $headers = [
                 'Authorization' => 'Bearer ' . $this->apiKey
             ];
@@ -52,7 +52,7 @@ class C411ApiClient
     {
         try {
             $path = $this->baseUrl.'/torrents?' . $this->buildQueryString($params);
-            error_log('Requesting C411 API with path: ' . $path);
+            error_log('Requesting C411 API with path: ' . $this->redact_url( $path ) );
             $headers = [
                 'Authorization' => 'Bearer ' . $this->apiKey
             ];
@@ -70,14 +70,25 @@ class C411ApiClient
     public function downloadTorrent($torrent_id)
     {
         try {
-            $path = sprintf("%s?t=get&id=%s&apikey=%s", $this->baseUrl, $torrent_id, $this->apiKey);
-            error_log('Requesting C411 API download with path: ' . $path);
-            $response = $this->client->request('GET', $path);
+            $path = sprintf("%s?t=get&id=%s", $this->baseUrl, $torrent_id);
+            error_log('Requesting C411 API download with path: ' . $path );
+            $headers = [
+                'Authorization' => 'Bearer ' . $this->apiKey
+            ];
+            $response = $this->client->request('GET', $path, ['headers' => $headers]);
             return $response->getBody()->getContents(); // Binary content of the .torrent
         } catch (RequestException $e) {
-            error_log('C411 API download failed: ' . $e->getMessage());
+            error_log('C411 API download failed: ' . $this->redact_url( $e->getMessage() ));
             return null;
         }
+    }
+
+    private function redact_url( string $url ): string {
+        return preg_replace(
+            '/([?&](?:passkey|api_key|apikey|token|key)=)[^&]+/',
+            '$1***',
+            $url
+        );
     }
 
     private function buildQueryString($params)

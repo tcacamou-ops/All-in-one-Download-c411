@@ -3,6 +3,7 @@ namespace AllI1D\C411\Filters;
 
 use AllI1D\C411\Models\C411ApiClient;
 use AllI1D\Actions\Logs;
+use AllI1D\Helpers\Crypto;
 
 class C411TvShows {
 
@@ -11,7 +12,7 @@ class C411TvShows {
     }
 
     public function process_tv_show($tvshow) {
-        $apiClient = new C411ApiClient(get_option('alli1d_c411_api_key', ''));
+        $apiClient = new C411ApiClient(Crypto::decrypt( get_option('alli1d_c411_api_key', '') ));
         $params = [
             'name'=> $tvshow['title'],
             'type'=>'tvshow',

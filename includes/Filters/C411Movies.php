@@ -3,6 +3,7 @@ namespace AllI1D\C411\Filters;
 
 use AllI1D\C411\Models\C411ApiClient;
 use AllI1D\Actions\Logs;
+use AllI1D\Helpers\Crypto;
 
 class C411Movies {
 
@@ -11,7 +12,7 @@ class C411Movies {
     }
 
     public function process_movie($movie) {
-        $apiClient = new C411ApiClient(get_option('alli1d_c411_api_key', ''));
+        $apiClient = new C411ApiClient(Crypto::decrypt( get_option('alli1d_c411_api_key', '') ));
         $params = [
             'name'=> $movie['title'],
             'type'=>'movie',

@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     const $document = $(document); // Cache document lookup
-    
+
     // init events listeners
     $document.on('click', '#submit-c411-credentials', submit_c411_credentials);
 
@@ -13,10 +13,14 @@ jQuery(document).ready(function ($) {
             },
             function (response, data) {
                 allI1d.showToast('Saved', 'success');
+                setTimeout(function () { location.reload(); }, 1000);
             },
             'POST',
             function (request, error) {
-                allI1d.showToast('Error', 'error');
+                var message = (request.responseJSON && request.responseJSON.message)
+                    ? request.responseJSON.message
+                    : error;
+                allI1d.showToast(message, 'error');
             }
         );
     }

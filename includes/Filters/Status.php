@@ -2,6 +2,7 @@
 namespace AllI1D\C411\Filters;
 
 use AllI1D\C411\Models\C411ApiClient;
+use AllI1D\Helpers\Crypto;
 
 class Status {
 
@@ -10,7 +11,7 @@ class Status {
 
     public static function process_status($status) {
         $apiClient = new C411ApiClient(
-            get_option('alli1d_c411_api_key', '')
+            Crypto::decrypt( get_option('alli1d_c411_api_key', '') )
         );
         $is_connected = $apiClient->testConnection();
 
