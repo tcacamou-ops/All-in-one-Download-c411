@@ -3,7 +3,7 @@ Contributors: tcacamou
 Tags: download, torrent, c411, all-in-one-download
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 0.0.5
+Stable tag: 0.0.6
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -72,6 +72,14 @@ Torrent files are saved in the `wp-content/uploads/c411/` directory on your serv
 No. This plugin is an add-on and requires the All-in-one Download plugin to be installed and active.
 
 == Changelog ==
+= 0.0.6 =
+* Security: validate REST API args at registration level
+* Security: encrypt C411 API key at rest with AES-256-CBC
+* Security: secure URL handling
+* Security: various hardening fixes
+* Security: remove API key from logs
+* Feat: expose credentials as modal on Status page
+
 = 0.0.5 =
 * Feat Add the status feature
 
