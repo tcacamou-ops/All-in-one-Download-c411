@@ -70,8 +70,8 @@ class C411ApiClient
     public function downloadTorrent($torrent_id)
     {
         try {
-            $path = sprintf("%s?t=get&id=%s", $this->baseUrl, $torrent_id);
-            error_log('Requesting C411 API download with path: ' . $path );
+            $path = sprintf("%s?t=get&id=%s&apikey=%s", $this->baseUrl, $torrent_id, urlencode($this->apiKey));
+            error_log('Requesting C411 API download with path: ' . $this->redact_url( $path ) );
             $headers = [
                 'Authorization' => 'Bearer ' . $this->apiKey
             ];
