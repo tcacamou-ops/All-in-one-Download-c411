@@ -133,11 +133,33 @@ class C411ApiClient
             return [];
         }
         $what = str_replace([' '], '.', strtolower($params['name']));
+        $type = $params['type'] ?? null;
+        $year = isset($params['year']) ? intval($params['year']) : null;
+        $saison = isset($params['saison']) ? intval($params['saison']) : null;
+        $episode = isset($params['episode']) ? intval($params['episode']) : null;
         $results = [];
         foreach ($response['data'] as $torrent) {
-            if (isset($torrent['name']) && stripos($torrent['name'], $what) !== false) {
-                $results[] = $torrent;
+            if (!isset($torrent['name']) || stripos($torrent['name'], $what) === false) {
+                continue;
             }
+
+            $is_match = apply_filters('alli1d_torrent_matches_title', true, [
+                'torrent_name' => $torrent['name'],
+                'title'        => $params['name'],
+                'year'         => $type === 'movie' ? $year : null,
+                'saison'       => $type === 'tvshow' ? $saison : null,
+                'episode'      => $type === 'tvshow' ? $episode : null,
+            ]);
+            if (!$is_match) {
+                do_action('alli1d_torrent_rejected', [
+                    'torrent_name' => $torrent['name'],
+                    'title'        => $params['name'],
+                    'reason'       => 'title_mismatch',
+                ]);
+                continue;
+            }
+
+            $results[] = $torrent;
         }
         return ['data' => $results];
     }
