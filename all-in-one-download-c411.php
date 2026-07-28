@@ -3,7 +3,7 @@
  * Plugin Name: All-in-one Download C411
  * Plugin URI: https://github.com/tcacamou-ops/All-in-one-Download-c411
  * Description: Add-on for All-in-one Download that allows downloading torrents from C411.
- * Version: 0.0.12
+ * Version: 0.0.13
  * Author: tcacamou
  * Author URI: https://github.com/tcacamou-ops
  * Text Domain: all-in-one-download-c411
@@ -15,6 +15,8 @@ namespace AllI1D\C411;
 use AllI1D\C411\Components\Credentials;
 use AllI1D\C411\Filters\C411Movies;
 use AllI1D\C411\Filters\C411TvShows;
+use AllI1D\C411\Filters\C411Search;
+use AllI1D\C411\Filters\C411DownloadSelection;
 use AllI1D\C411\Filters\Status;
 use AllI1D\Helpers\Crypto;
 use honemo\updater\Updater;
@@ -63,9 +65,13 @@ class Plugin {
     private function initialize_filters() {
         $C411ApiMovies  = new C411Movies();
         $C411ApiTvShows = new C411TvShows();
+        $C411ApiSearch  = new C411Search();
+        $C411ApiDownloadSelection = new C411DownloadSelection();
         add_filter( 'alli1d_process_tvshow', [$C411ApiTvShows, 'process_tv_show'] );
         add_filter( 'alli1d_process_movie', [$C411ApiMovies, 'process_movie'] );
         add_filter( 'alli1d_process_status', [Status::class, 'process_status'] );
+        add_filter( 'alli1d_search_providers', [$C411ApiSearch, 'search'], 10, 2 );
+        add_filter( 'alli1d_download_selected_result_c411', [$C411ApiDownloadSelection, 'download'], 10, 2 );
         add_filter( 'alli1d_provider_settings_modals', [$this, 'register_modal'] );
         add_action( 'admin_init', [$this, 'migrate_credentials_encryption'] );
     }

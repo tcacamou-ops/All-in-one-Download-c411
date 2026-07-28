@@ -1,12 +1,15 @@
 <?php
 namespace AllI1D\C411\Models;
 
+use AllI1D\Services\TorrentMetadataParser;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 
 class C411ApiClient
 {
+    private const REQUEST_TIMEOUT = 10;
+
     // @var Client
     private $client;
     private $baseUrl = 'https://c411.org/api';
@@ -22,7 +25,7 @@ class C411ApiClient
     public function __construct($apiKey = '')
     {
         $this->apiKey = $apiKey;
-        $this->client = new Client();
+        $this->client = new Client(['timeout' => self::REQUEST_TIMEOUT]);
     }
 
     /**
@@ -50,6 +53,69 @@ class C411ApiClient
      */
     public function listTorrents($params = [])
     {
+        $response = $this->fetchTorrents($params);
+        if ($response === null) {
+            return null;
+        }
+        return $this->filter($response, $params);
+    }
+
+    /**
+     * Keyword search for the guided-search modal, mapped to the common
+     * provider result contract and capped to the top 10 by seeders.
+     * Unlike listTorrents()/filter(), this does NOT apply title/season/episode
+     * matching: the user picks manually, so raw keyword results are returned as-is.
+     * @param array $criteria ['title'=>string, 'type'=>?string, 'saison'=>?int, 'episode'=>?int, 'audio_format'=>?string]
+     * @return array
+     */
+    public function searchTorrents(array $criteria): array
+    {
+        $params = array_filter([
+            'name' => $criteria['title'] ?? '',
+            'type' => $criteria['type'] ?? null,
+            'saison' => $criteria['saison'] ?? null,
+            'episode' => $criteria['episode'] ?? null,
+        ], static function ($value) {
+            return $value !== null;
+        });
+        if (($criteria['audio_format'] ?? null) === 'VF') {
+            $params['lang'] = 'VFF,TRUEFRENCH,FRENCH';
+        }
+
+        $response = $this->fetchTorrents($params);
+        if ($response === null || !isset($response['data']) || count($response['data']) === 0) {
+            return [];
+        }
+
+        $parser = new TorrentMetadataParser();
+        $items = array_map(static function ($torrent) use ($parser) {
+            $seeders = intval($torrent['seeders'] ?? 0);
+            return [
+                'provider' => 'c411',
+                'title'    => $torrent['name'] ?? '',
+                'quality'  => $parser->extract_quality($torrent['name'] ?? ''),
+                'language' => $parser->extract_language($torrent['name'] ?? ''),
+                'id'       => $torrent['infoHash'] ?? '',
+                'score'    => $seeders,
+                'extra'    => ['seeders' => $seeders, 'size' => $torrent['size'] ?? null],
+            ];
+        }, $response['data']);
+
+        usort($items, static function ($a, $b) {
+            return $b['score'] <=> $a['score'];
+        });
+
+        return array_slice($items, 0, 10);
+    }
+
+    /**
+     * Raw torrent listing request, without the title/season/episode filter
+     * applied by listTorrents(). Shared by listTorrents() and searchTorrents().
+     * @param array $params
+     * @return array|null
+     */
+    private function fetchTorrents($params)
+    {
         try {
             $path = $this->baseUrl.'/torrents?' . $this->buildQueryString($params);
             error_log('Requesting C411 API with path: ' . $this->redact_url( $path ) );
@@ -57,7 +123,7 @@ class C411ApiClient
                 'Authorization' => 'Bearer ' . $this->apiKey
             ];
             $response = $this->client->request('GET', $path, ['headers' => $headers]);
-            return $this->filter(json_decode($response->getBody()->getContents(), true), $params); // Returns the raw response content
+            return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
             error_log('C411 API request failed: ' . $e->getMessage());
             return null;
