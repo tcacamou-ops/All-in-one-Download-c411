@@ -4,11 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
+class ComposerStaticInitc5e1c0d84cf529c539b31d6e513b5e78
 {
     public static $files = array (
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
@@ -16,6 +17,10 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'h' =>
         array (
             'honemo\\updater\\' => 15,
+        ),
+        'S' =>
+        array (
+            'Symfony\\Polyfill\\Php80\\' => 23,
         ),
         'P' =>
         array (
@@ -38,6 +43,10 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'honemo\\updater\\' =>
         array (
             0 => __DIR__ . '/..' . '/honemo/wp-github-updater/src',
+        ),
+        'Symfony\\Polyfill\\Php80\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
         'Psr\\Http\\Message\\' =>
         array (
@@ -72,12 +81,17 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'AllI1D\\C411\\Api\\CredentialsApi' => __DIR__ . '/../..' . '/includes/Api/CredentialsApi.php',
         'AllI1D\\C411\\Components\\Credentials' => __DIR__ . '/../..' . '/includes/Components/Credentials.php',
         'AllI1D\\C411\\Filters\\C411DownloadSelection' => __DIR__ . '/../..' . '/includes/Filters/C411DownloadSelection.php',
+        'AllI1D\\C411\\Filters\\C411FeedCatalogIndexer' => __DIR__ . '/../..' . '/includes/Filters/C411FeedCatalogIndexer.php',
+        'AllI1D\\C411\\Filters\\C411FeedFetcher' => __DIR__ . '/../..' . '/includes/Filters/C411FeedFetcher.php',
         'AllI1D\\C411\\Filters\\C411Movies' => __DIR__ . '/../..' . '/includes/Filters/C411Movies.php',
         'AllI1D\\C411\\Filters\\C411Search' => __DIR__ . '/../..' . '/includes/Filters/C411Search.php',
         'AllI1D\\C411\\Filters\\C411TvShows' => __DIR__ . '/../..' . '/includes/Filters/C411TvShows.php',
         'AllI1D\\C411\\Filters\\Status' => __DIR__ . '/../..' . '/includes/Filters/Status.php',
+        'AllI1D\\C411\\Helpers\\UploadDirProtection' => __DIR__ . '/../..' . '/includes/Helpers/UploadDirProtection.php',
         'AllI1D\\C411\\Models\\C411ApiClient' => __DIR__ . '/../..' . '/includes/Models/C411ApiClient.php',
+        'AllI1D\\C411\\Models\\C411TorznabClient' => __DIR__ . '/../..' . '/includes/Models/C411TorznabClient.php',
         'AllI1D\\C411\\Pages\\Settings' => __DIR__ . '/../..' . '/includes/Pages/Settings.php',
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'GuzzleHttp\\BodySummarizer' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizer.php',
         'GuzzleHttp\\BodySummarizerInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/BodySummarizerInterface.php',
@@ -103,14 +117,20 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'GuzzleHttp\\Handler\\CurlFactoryInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlFactoryInterface.php',
         'GuzzleHttp\\Handler\\CurlHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlHandler.php',
         'GuzzleHttp\\Handler\\CurlMultiHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlMultiHandler.php',
+        'GuzzleHttp\\Handler\\CurlShareHandleState' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlShareHandleState.php',
+        'GuzzleHttp\\Handler\\CurlVersion' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/CurlVersion.php',
         'GuzzleHttp\\Handler\\EasyHandle' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/EasyHandle.php',
         'GuzzleHttp\\Handler\\HeaderProcessor' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/HeaderProcessor.php',
+        'GuzzleHttp\\Handler\\HostValidator' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/HostValidator.php',
         'GuzzleHttp\\Handler\\MockHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/MockHandler.php',
         'GuzzleHttp\\Handler\\Proxy' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/Proxy.php',
+        'GuzzleHttp\\Handler\\ProxyEnvironment' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/ProxyEnvironment.php',
         'GuzzleHttp\\Handler\\StreamHandler' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/StreamHandler.php',
+        'GuzzleHttp\\Handler\\TlsVersion' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Handler/TlsVersion.php',
         'GuzzleHttp\\MessageFormatter' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/MessageFormatter.php',
         'GuzzleHttp\\MessageFormatterInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/MessageFormatterInterface.php',
         'GuzzleHttp\\Middleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Middleware.php',
+        'GuzzleHttp\\Multiplexing' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Multiplexing.php',
         'GuzzleHttp\\Pool' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Pool.php',
         'GuzzleHttp\\PrepareBodyMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/PrepareBodyMiddleware.php',
         'GuzzleHttp\\Promise\\AggregateException' => __DIR__ . '/..' . '/guzzlehttp/promises/src/AggregateException.php',
@@ -149,6 +169,7 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'GuzzleHttp\\Psr7\\Query' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Query.php',
         'GuzzleHttp\\Psr7\\Request' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Request.php',
         'GuzzleHttp\\Psr7\\Response' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Response.php',
+        'GuzzleHttp\\Psr7\\Rfc3986' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Rfc3986.php',
         'GuzzleHttp\\Psr7\\Rfc7230' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Rfc7230.php',
         'GuzzleHttp\\Psr7\\ServerRequest' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/ServerRequest.php',
         'GuzzleHttp\\Psr7\\Stream' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Stream.php',
@@ -164,7 +185,9 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'GuzzleHttp\\RequestOptions' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RequestOptions.php',
         'GuzzleHttp\\RetryMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RetryMiddleware.php',
         'GuzzleHttp\\TransferStats' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/TransferStats.php',
+        'GuzzleHttp\\TransportSharing' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/TransportSharing.php',
         'GuzzleHttp\\Utils' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Utils.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'Psr\\Http\\Client\\ClientExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/ClientExceptionInterface.php',
         'Psr\\Http\\Client\\ClientInterface' => __DIR__ . '/..' . '/psr/http-client/src/ClientInterface.php',
         'Psr\\Http\\Client\\NetworkExceptionInterface' => __DIR__ . '/..' . '/psr/http-client/src/NetworkExceptionInterface.php',
@@ -182,15 +205,20 @@ class ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f
         'Psr\\Http\\Message\\UploadedFileInterface' => __DIR__ . '/..' . '/psr/http-message/src/UploadedFileInterface.php',
         'Psr\\Http\\Message\\UriFactoryInterface' => __DIR__ . '/..' . '/psr/http-factory/src/UriFactoryInterface.php',
         'Psr\\Http\\Message\\UriInterface' => __DIR__ . '/..' . '/psr/http-message/src/UriInterface.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
+        'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'honemo\\updater\\Updater' => __DIR__ . '/..' . '/honemo/wp-github-updater/src/Updater.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitb9fe76a0fc6c44b23f5531775ec7595f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc5e1c0d84cf529c539b31d6e513b5e78::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc5e1c0d84cf529c539b31d6e513b5e78::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitc5e1c0d84cf529c539b31d6e513b5e78::$classMap;
 
         }, null, ClassLoader::class);
     }

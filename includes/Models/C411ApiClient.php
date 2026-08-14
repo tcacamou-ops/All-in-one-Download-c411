@@ -109,6 +109,59 @@ class C411ApiClient
     }
 
     /**
+     * Fetch feed items, called directly by `C411FeedFetcher`.
+     *
+     * For the interactive search context, delegates to searchTorrents()
+     * unchanged (sorted, capped to 10, no title/season/episode matching).
+     * For the cron context (movie/tv-show processing), replicates
+     * listTorrents()'s existing title/season/episode-filtered request and
+     * maps the (already filtered) candidate list to the common provider
+     * contract, preserving order — the caller still picks the first item.
+     * @param array $criteria ['context'=>'cron'|'search', 'title'=>string, 'type'=>?string, 'saison'=>?int, 'episode'=>?int, 'audio_format'=>?string]
+     * @return array|null Null on request failure (not cached); [] on empty result (cached as a real miss).
+     */
+    public function fetchFeed(array $criteria): ?array
+    {
+        if (($criteria['context'] ?? null) === 'search') {
+            return $this->searchTorrents($criteria);
+        }
+
+        $params = array_filter([
+            'name' => $criteria['title'] ?? '',
+            'type' => $criteria['type'] ?? null,
+            'saison' => $criteria['saison'] ?? null,
+            'episode' => $criteria['episode'] ?? null,
+        ], static function ($value) {
+            return $value !== null;
+        });
+        if (($criteria['audio_format'] ?? null) === 'VF') {
+            $params['lang'] = 'VFF,TRUEFRENCH,FRENCH';
+        }
+
+        $response = $this->listTorrents($params);
+        if ($response === null) {
+            return null;
+        }
+        if (!isset($response['data'])) {
+            return [];
+        }
+
+        $parser = new TorrentMetadataParser();
+        return array_map(static function ($torrent) use ($parser) {
+            $seeders = intval($torrent['seeders'] ?? 0);
+            return [
+                'provider' => 'c411',
+                'title'    => $torrent['name'] ?? '',
+                'quality'  => $parser->extract_quality($torrent['name'] ?? ''),
+                'language' => $parser->extract_language($torrent['name'] ?? ''),
+                'id'       => $torrent['infoHash'] ?? '',
+                'score'    => $seeders,
+                'extra'    => ['seeders' => $seeders, 'size' => $torrent['size'] ?? null],
+            ];
+        }, $response['data']);
+    }
+
+    /**
      * Raw torrent listing request, without the title/season/episode filter
      * applied by listTorrents(). Shared by listTorrents() and searchTorrents().
      * @param array $params
@@ -131,12 +184,22 @@ class C411ApiClient
     }
 
     /**
+     * Expected format of a C411 torrent identifier: the infoHash returned by
+     * searchTorrents()/listTorrents(), a hexadecimal SHA-1 hash (40 chars).
+     */
+    private const TORRENT_ID_PATTERN = '/^[a-fA-F0-9]{40}$/';
+
+    /**
      * Download the .torrent file
      */
     public function downloadTorrent($torrent_id)
     {
+        if (!is_string($torrent_id) || !preg_match(self::TORRENT_ID_PATTERN, $torrent_id)) {
+            error_log('C411 API download rejected: invalid torrent id format');
+            return null;
+        }
         try {
-            $path = sprintf("%s?t=get&id=%s&apikey=%s", $this->baseUrl, $torrent_id, urlencode($this->apiKey));
+            $path = sprintf("%s?t=get&id=%s", $this->baseUrl, rawurlencode($torrent_id));
             error_log('Requesting C411 API download with path: ' . $this->redact_url( $path ) );
             $headers = [
                 'Authorization' => 'Bearer ' . $this->apiKey
@@ -217,11 +280,7 @@ class C411ApiClient
                 'episode'      => $type === 'tvshow' ? $episode : null,
             ]);
             if (!$is_match) {
-                do_action('alli1d_torrent_rejected', [
-                    'torrent_name' => $torrent['name'],
-                    'title'        => $params['name'],
-                    'reason'       => 'title_mismatch',
-                ]);
+                // TorrentTitleMatcher already logs the real rejection reason.
                 continue;
             }
 

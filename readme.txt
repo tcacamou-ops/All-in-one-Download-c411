@@ -3,7 +3,7 @@ Contributors: tcacamou
 Tags: download, torrent, c411, all-in-one-download
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 0.0.13
+Stable tag: 0.0.14
 Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -72,6 +72,33 @@ Torrent files are saved in the `wp-content/uploads/c411/` directory on your serv
 No. This plugin is an add-on and requires the All-in-one Download plugin to be installed and active.
 
 == Changelog ==
+= 0.0.14 =
+* Feat: apply the movie/TV show quality preference (`alli1d_torrent_matches_quality`) when matching C411 results
+* Fix: live-fetched results are now title- and quality-matched like catalog results instead of blindly using the first item
+
+= 0.0.13 =
+* Feat: add keyword search capability for C411 provider (`alli1d_search_providers`)
+* Feat: add `C411DownloadSelection` filter to download guided-search results
+
+= 0.0.12 =
+* Feat: filter C411 results by title match in addition to substring match
+
+= 0.0.11 =
+* No functional changes.
+
+= 0.0.10 =
+* No functional changes (release process tooling update).
+
+= 0.0.9 =
+* No functional changes.
+
+= 0.0.8 =
+* Fix: add missing API key parameter to torrent download request
+* Security: redact API key from download request logs
+
+= 0.0.7 =
+* No functional changes.
+
 = 0.0.6 =
 * Security: validate REST API args at registration level
 * Security: encrypt C411 API key at rest with AES-256-CBC

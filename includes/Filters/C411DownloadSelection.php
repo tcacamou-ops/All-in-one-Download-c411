@@ -2,6 +2,7 @@
 namespace AllI1D\C411\Filters;
 
 use AllI1D\C411\Models\C411ApiClient;
+use AllI1D\C411\Helpers\UploadDirProtection;
 use AllI1D\Helpers\Crypto;
 use Throwable;
 
@@ -28,6 +29,7 @@ class C411DownloadSelection {
             if (!file_exists($c411_dir)) {
                 mkdir($c411_dir, 0755, true);
             }
+            UploadDirProtection::protect($c411_dir);
             $file_name = preg_replace('/[^a-zA-Z0-9_-]/', '', str_replace(' ', '_', implode('-', [$result['title'], $result['quality']]))) . '.torrent';
             $file_path = $c411_dir . '/' . $file_name;
             file_put_contents($file_path, $file_content);

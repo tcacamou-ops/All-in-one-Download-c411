@@ -5,6 +5,14 @@
             "AllI1D\\C411\\": "includes/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "AllI1D\\C411\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --configuration tests/phpunit.xml"
+    },
     "authors": [
         {
             "name": "honemo",
@@ -17,7 +25,10 @@
         "honemo/wp-github-updater": "^1.0"
     },
     "require-dev": {
-        "roots/wordpress": "@stable"
+        "roots/wordpress": "@stable",
+        "phpunit/phpunit": "^9.6",
+        "brain/monkey": "^2.6",
+        "yoast/wp-test-utils": "^1.2"
     },
     "config": {
         "allow-plugins": {
