@@ -33,6 +33,7 @@
     "config": {
         "allow-plugins": {
             "roots/wordpress-core-installer": true
-        }
+        },
+        "autoloader-suffix": "a95b95ee170e5a92c6b73ca269105666"
     }
 }
